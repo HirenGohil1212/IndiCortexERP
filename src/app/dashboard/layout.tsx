@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   Search,
   Settings,
+  ShieldCheck,
   Ship,
   ShoppingCart,
   Truck,
@@ -55,6 +56,7 @@ const navItems = [
   { href: '/dashboard/inventory', icon: Warehouse, label: 'Inventory' },
   { href: '/dashboard/finance', icon: Landmark, label: 'Finance' },
   { href: '/dashboard/hr', icon: Users, label: 'HR' },
+  { href: '/dashboard/quality', icon: ShieldCheck, label: 'Quality' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
 ];
 
