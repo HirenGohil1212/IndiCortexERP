@@ -11,7 +11,6 @@ import {
   Landmark,
   LayoutDashboard,
   ScrollText,
-  Search,
   Settings,
   ShieldCheck,
   Ship,
@@ -30,7 +29,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-  SidebarTrigger,
   SidebarInset,
   useSidebar,
 } from '@/components/ui/sidebar';
@@ -42,14 +40,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Input } from '@/components/ui/input';
 import { ApexLogo } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -72,95 +66,123 @@ const settingsNav = [
   { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ];
 
+function NavContent() {
+  const pathname = usePathname();
+  const userAvatar = PlaceHolderImages.find((img) => img.id === 'user-avatar');
+  const { setOpenMobile } = useSidebar();
+
+  const handleLinkClick = () => {
+    setOpenMobile(false);
+  };
+
+  return (
+    <>
+      <SidebarHeader className="border-b border-sidebar-border">
+        <div
+          className={cn(
+            'flex items-center gap-2 transition-all duration-200',
+            'group-data-[collapsible=icon]:-ml-1'
+          )}
+        >
+          <ApexLogo className="size-7 shrink-0" />
+          <span className="text-lg font-semibold group-data-[collapsible=icon]:opacity-0">
+            ApexERP
+          </span>
+        </div>
+      </SidebarHeader>
+      <SidebarContent className="flex-1 p-2">
+        <SidebarMenu>
+          {navItems.map((item) => (
+            <SidebarMenuItem key={item.href}>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.href}
+                tooltip={item.label}
+                onClick={handleLinkClick}
+              >
+                <Link href={item.href}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter className="border-t border-sidebar-border p-2">
+        <SidebarMenu>
+          {settingsNav.map((item) => (
+            <SidebarMenuItem key={item.href}>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith(item.href)}
+                tooltip={item.label}
+                onClick={handleLinkClick}
+              >
+                <Link href={item.href}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton className="h-auto w-full justify-start p-2">
+                  <Avatar className="h-8 w-8">
+                    {userAvatar && (
+                      <AvatarImage
+                        src={userAvatar.imageUrl}
+                        alt="User Avatar"
+                      />
+                    )}
+                    <AvatarFallback>JD</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col items-start truncate">
+                    <span className="font-medium">John Doe</span>
+                    <span className="text-xs text-muted-foreground">Admin</span>
+                  </div>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="right"
+                align="start"
+                className="w-56"
+              >
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLinkClick}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLinkClick}>
+                  Billing
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLinkClick}>
+                  Team
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLinkClick}>
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </>
+  );
+}
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const userAvatar = PlaceHolderImages.find((img) => img.id === 'user-avatar');
-
   return (
     <SidebarProvider>
       <Sidebar>
-        <SidebarHeader className="border-b border-sidebar-border">
-          <div
-            className={cn(
-              'flex items-center gap-2 transition-all duration-200',
-              'group-data-[collapsible=icon]:-ml-1'
-            )}
-          >
-            <ApexLogo className="size-7 shrink-0" />
-            <span className="text-lg font-semibold group-data-[collapsible=icon]:opacity-0">
-              ApexERP
-            </span>
-          </div>
-        </SidebarHeader>
-        <SidebarContent className="flex-1 p-2">
-          <SidebarMenu>
-            {navItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === item.href}
-                  tooltip={item.label}
-                >
-                  <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarContent>
-        <SidebarFooter className="border-t border-sidebar-border p-2">
-          <SidebarMenu>
-            {settingsNav.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname.startsWith(item.href)}
-                  tooltip={item.label}
-                >
-                  <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-            <SidebarMenuItem>
-               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton
-                    className="h-auto w-full justify-start p-2"
-                  >
-                    <Avatar className="h-8 w-8">
-                       {userAvatar && <AvatarImage src={userAvatar.imageUrl} alt="User Avatar" />}
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col items-start truncate">
-                      <span className="font-medium">John Doe</span>
-                      <span className="text-xs text-muted-foreground">
-                        Admin
-                      </span>
-                    </div>
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent side="right" align="start" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Billing</DropdownMenuItem>
-                  <DropdownMenuItem>Team</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Log out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
+        <NavContent />
       </Sidebar>
       <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
