@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   Activity,
   ArrowUpRight,
-  DollarSign,
+  IndianRupee,
   GanttChartSquare,
   Users,
 } from 'lucide-react';
@@ -67,10 +67,10 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Total Revenue
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <IndianRupee className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
+              <div className="text-2xl font-bold">₹4,52,31,890</div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month
               </p>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
                     olivia.martin@email.com
                   </p>
                 </div>
-                <div className="ml-auto font-medium">+$1,999.00</div>
+                <div className="ml-auto font-medium">+₹1,99,900</div>
               </div>
               <div className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                     jackson.lee@email.com
                   </p>
                 </div>
-                <div className="ml-auto font-medium">+$39.00</div>
+                <div className="ml-auto font-medium">+₹3,900</div>
               </div>
               <div className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
@@ -213,7 +213,7 @@ export default function DashboardPage() {
                     isabella.nguyen@email.com
                   </p>
                 </div>
-                <div className="ml-auto font-medium">+$299.00</div>
+                <div className="ml-auto font-medium">+₹29,900</div>
               </div>
               <div className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
@@ -228,7 +228,7 @@ export default function DashboardPage() {
                     will@email.com
                   </p>
                 </div>
-                <div className="ml-auto font-medium">+$99.00</div>
+                <div className="ml-auto font-medium">+₹9,900</div>
               </div>
               <div className="flex items-center gap-4">
                 <Avatar className="hidden h-9 w-9 sm:flex">
@@ -243,7 +243,7 @@ export default function DashboardPage() {
                     sofia.davis@email.com
                   </p>
                 </div>
-                <div className="ml-auto font-medium">+$39.00</div>
+                <div className="ml-auto font-medium">+₹3,900</div>
               </div>
             </CardContent>
           </Card>
