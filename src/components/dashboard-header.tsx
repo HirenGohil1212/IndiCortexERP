@@ -1,10 +1,7 @@
-
 'use client';
 import { Search } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 
 type DashboardHeaderProps = {
     title: string;
@@ -28,11 +25,6 @@ export function DashboardHeader({ title }: DashboardHeaderProps) {
                 />
               </div>
             </form>
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="airplane-mode" className="text-sm text-muted-foreground">Prod</Label>
-              <Switch id="airplane-mode" defaultChecked />
-              <Label htmlFor="airplane-mode" className="text-sm font-medium">Sandbox</Label>
-            </div>
           </div>
         </header>
     )
