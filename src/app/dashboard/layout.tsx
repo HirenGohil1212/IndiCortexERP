@@ -12,6 +12,7 @@ import {
   Settings,
   ShoppingCart,
   Truck,
+  Users,
   Warehouse,
 } from 'lucide-react';
 import {
@@ -51,6 +52,7 @@ const navItems = [
   { href: '/dashboard/production', icon: GanttChartSquare, label: 'Production' },
   { href: '/dashboard/inventory', icon: Warehouse, label: 'Inventory' },
   { href: '/dashboard/finance', icon: Landmark, label: 'Finance' },
+  { href: '/dashboard/hr', icon: Users, label: 'HR' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
 ];
 
