@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   BarChart3,
+  Briefcase,
   GanttChartSquare,
   HardHat,
   Landmark,
@@ -61,6 +62,7 @@ const navItems = [
   { href: '/dashboard/contractors', icon: HardHat, label: 'Contractors' },
   { href: '/dashboard/quality', icon: ShieldCheck, label: 'Quality' },
   { href: '/dashboard/maintenance', icon: Wrench, label: 'Maintenance' },
+  { href: '/dashboard/assets', icon: Briefcase, label: 'Assets' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
 ];
 
