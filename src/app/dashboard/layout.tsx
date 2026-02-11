@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   BarChart3,
   GanttChartSquare,
+  HardHat,
   Landmark,
   LayoutDashboard,
   Search,
@@ -56,6 +57,7 @@ const navItems = [
   { href: '/dashboard/inventory', icon: Warehouse, label: 'Inventory' },
   { href: '/dashboard/finance', icon: Landmark, label: 'Finance' },
   { href: '/dashboard/hr', icon: Users, label: 'HR' },
+  { href: '/dashboard/contractors', icon: HardHat, label: 'Contractors' },
   { href: '/dashboard/quality', icon: ShieldCheck, label: 'Quality' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
 ];
