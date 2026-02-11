@@ -10,6 +10,7 @@ import {
   HardHat,
   Landmark,
   LayoutDashboard,
+  ScrollText,
   Search,
   Settings,
   ShieldCheck,
@@ -64,6 +65,7 @@ const navItems = [
   { href: '/dashboard/maintenance', icon: Wrench, label: 'Maintenance' },
   { href: '/dashboard/assets', icon: Briefcase, label: 'Assets' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
+  { href: '/dashboard/statutory', icon: ScrollText, label: 'Statutory' },
 ];
 
 const settingsNav = [
