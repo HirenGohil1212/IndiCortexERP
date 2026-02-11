@@ -21,6 +21,9 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
+import { InvoiceTemplate } from '@/components/invoice-template';
+import { ApexLogo } from '@/components/icons';
 
 // 1.1 Inquiry Received
 const inquiryItemSchema = z.object({
@@ -77,7 +80,7 @@ function InquiryForm() {
             <CardDescription>Enter the details for a new sales inquiry.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <div className="grid md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="grid gap-2">
                 <Label>Inquiry No</Label>
                 <Input disabled placeholder="Auto-generated" />
@@ -224,7 +227,7 @@ function InquiryForm() {
                <FormMessage className="mt-2">{form.formState.errors.items?.message}</FormMessage>
             </div>
             
-             <div className="grid md:grid-cols-4 gap-4">
+             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                  <FormField
                     control={form.control}
                     name="status"
@@ -310,7 +313,7 @@ function QuotationForm() {
             <CardDescription>Send a proposal to a customer.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <div className="grid md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2">
                     <Label>Quote ID</Label>
                     <Input disabled placeholder="Auto-generated" />
@@ -388,7 +391,7 @@ function CustomerPOForm() {
             <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Receive Customer PO</CardTitle><CardDescription>Confirm a customer order.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <FormField control={form.control} name="poNumber" render={({ field }) => (
                         <FormItem><FormLabel>PO Number</FormLabel><FormControl><Input placeholder="Customer's PO Number" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
@@ -433,12 +436,12 @@ function SaleOrderForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Sale Order</CardTitle><CardDescription>Lock inventory for a customer order.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>SO No</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="customerPoRef" render={({ field }) => (<FormItem><FormLabel>Customer PO Ref</FormLabel><FormControl><Input placeholder="Customer PO Number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="status" render={({ field }) => (<FormItem><FormLabel>Status</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="Pending">Pending</SelectItem><SelectItem value="Dispatched">Dispatched</SelectItem><SelectItem value="Closed">Closed</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField control={form.control} name="billingAddress" render={({ field }) => (<FormItem><FormLabel>Billing Address</FormLabel><FormControl><Textarea placeholder="Enter billing address" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="shippingAddress" render={({ field }) => (<FormItem><FormLabel>Shipping Address</FormLabel><FormControl><Textarea placeholder="Enter shipping address" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
@@ -464,7 +467,7 @@ function DispatchAdviceForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Dispatch Advice</CardTitle><CardDescription>Create a warehouse instruction for dispatch.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2"><Label>Dispatch ID</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="soRef" render={({ field }) => (<FormItem><FormLabel>SO Ref</FormLabel><FormControl><Input placeholder="SO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="transporter" render={({ field }) => (<FormItem><FormLabel>Transporter</FormLabel><FormControl><Input placeholder="Transporter Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -477,33 +480,62 @@ function DispatchAdviceForm() {
 }
 
 // 1.7 Invoice
+const saleInvoiceItemSchema = z.object({
+  itemName: z.string().min(1, "Item name is required."),
+  quantity: z.coerce.number().min(1),
+  rate: z.coerce.number().min(0),
+  gstPercent: z.coerce.number().min(0).max(100),
+});
 const saleInvoiceSchema = z.object({
+  soRef: z.string().min(1, "Sale Order reference is required."),
   date: z.date(),
+  billingAddress: z.string().min(1, "Billing address is required."),
+  shippingAddress: z.string().min(1, "Shipping address is required."),
   placeOfSupply: z.string().min(1, "Place of supply is required."),
   ewayBillNo: z.string().optional(),
-  taxableValue: z.coerce.number().min(0),
-  gstAmount: z.coerce.number().min(0),
-  roundOff: z.coerce.number().optional(),
-  grandTotal: z.coerce.number().min(0),
+  items: z.array(saleInvoiceItemSchema).min(1, "Please add at least one item."),
 });
+
 type SaleInvoiceFormValues = z.infer<typeof saleInvoiceSchema>;
 
 function SaleInvoiceForm() {
     const { toast } = useToast();
-    const form = useForm<SaleInvoiceFormValues>({ resolver: zodResolver(saleInvoiceSchema), defaultValues: { date: new Date(), placeOfSupply: '', taxableValue: 0, gstAmount: 0, grandTotal: 0 }});
-    function onSubmit(data: SaleInvoiceFormValues) { console.log(data); toast({ title: "Invoice Generated" }); form.reset(); }
-    const { taxableValue, gstAmount, roundOff } = form.watch();
-    React.useEffect(() => {
-        const total = (taxableValue || 0) + (gstAmount || 0) + (roundOff || 0);
-        form.setValue('grandTotal', total);
-    }, [taxableValue, gstAmount, roundOff, form]);
+    const form = useForm<SaleInvoiceFormValues>({ 
+        resolver: zodResolver(saleInvoiceSchema), 
+        defaultValues: { 
+            soRef: '',
+            date: new Date(), 
+            placeOfSupply: '',
+            billingAddress: '',
+            shippingAddress: '',
+            ewayBillNo: '',
+            items: [{ itemName: '', quantity: 1, rate: 0, gstPercent: 18 }],
+        }
+    });
+
+    const { fields, append, remove } = useFieldArray({ control: form.control, name: "items" });
+    const watchedItems = form.watch('items');
+
+    const [taxableValue, gstAmount, grandTotal] = React.useMemo(() => {
+        const subtotal = watchedItems.reduce((acc, item) => acc + (item.quantity * item.rate), 0);
+        const totalGst = watchedItems.reduce((acc, item) => acc + (item.quantity * item.rate * (item.gstPercent / 100)), 0);
+        const grand = subtotal + totalGst;
+        return [subtotal, totalGst, grand];
+    }, [watchedItems]);
+
+    function onSubmit(data: SaleInvoiceFormValues) { 
+        console.log(data); 
+        toast({ title: "Invoice Generated" }); 
+    }
     
     return (
-        <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
+        <Card>
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Invoice</CardTitle><CardDescription>Generate a bill for a sale.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>Invoice No</Label><Input disabled placeholder="Auto-generated" /></div>
+                    <FormField control={form.control} name="soRef" render={({ field }) => (<FormItem><FormLabel>Sale Order Ref</FormLabel><FormControl><Input placeholder="SO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="date" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
                             <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
@@ -512,14 +544,63 @@ function SaleInvoiceForm() {
                      <FormField control={form.control} name="placeOfSupply" render={({ field }) => (<FormItem><FormLabel>Place of Supply</FormLabel><FormControl><Input placeholder="e.g. Mumbai" {...field} /></FormControl><FormMessage /></FormItem>)} />
                      <FormField control={form.control} name="ewayBillNo" render={({ field }) => (<FormItem><FormLabel>E-Way Bill No</FormLabel><FormControl><Input placeholder="E-Way Bill Number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                  </div>
-                 <div className="grid md:grid-cols-4 gap-4">
-                    <FormField control={form.control} name="taxableValue" render={({ field }) => (<FormItem><FormLabel>Taxable Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="gstAmount" render={({ field }) => (<FormItem><FormLabel>GST Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="roundOff" render={({ field }) => (<FormItem><FormLabel>Round Off</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="grandTotal" render={({ field }) => (<FormItem><FormLabel>Grand Total</FormLabel><FormControl><Input type="number" disabled {...field} /></FormControl><FormMessage /></FormItem>)} />
-                 </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="billingAddress" render={({ field }) => (<FormItem><FormLabel>Billing Address</FormLabel><FormControl><Textarea placeholder="Enter billing address" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="shippingAddress" render={({ field }) => (<FormItem><FormLabel>Shipping Address</FormLabel><FormControl><Textarea placeholder="Enter shipping address" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                </div>
+                 <div>
+                    <h3 className="text-lg font-medium mb-2">Items</h3>
+                    <div className="rounded-md border">
+                        <Table>
+                        <TableHeader><TableRow>
+                            <TableHead className="w-[40%]">Item</TableHead>
+                            <TableHead>Qty</TableHead>
+                            <TableHead>Rate</TableHead>
+                            <TableHead>GST %</TableHead>
+                            <TableHead className="text-right">Total</TableHead>
+                            <TableHead className="w-[50px]"></TableHead>
+                        </TableRow></TableHeader>
+                        <TableBody>
+                            {fields.map((field, index) => (
+                            <TableRow key={field.id}>
+                                <TableCell><FormField control={form.control} name={`items.${index}.itemName`} render={({ field }) => (<FormItem><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
+                                <TableCell><FormField control={form.control} name={`items.${index}.quantity`} render={({ field }) => (<FormItem><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
+                                <TableCell><FormField control={form.control} name={`items.${index}.rate`} render={({ field }) => (<FormItem><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
+                                <TableCell><FormField control={form.control} name={`items.${index}.gstPercent`} render={({ field }) => (<FormItem><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
+                                <TableCell className="text-right">₹{((watchedItems[index]?.quantity || 0) * (watchedItems[index]?.rate || 0) * (1 + (watchedItems[index]?.gstPercent || 0) / 100)).toFixed(2)}</TableCell>
+                                <TableCell>{fields.length > 1 && (<Button variant="ghost" size="icon" onClick={() => remove(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>)}</TableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </div>
+                    <Button type="button" variant="outline" size="sm" className="mt-4" onClick={() => append({ itemName: '', quantity: 1, rate: 0, gstPercent: 18 })}>
+                        <PlusCircle className="mr-2 h-4 w-4" /> Add Item
+                    </Button>
+                </div>
+
+                <div className="flex justify-end">
+                    <div className="w-full max-w-sm space-y-2">
+                        <div className="flex justify-between">
+                            <span className="text-muted-foreground">Subtotal</span>
+                            <span>₹{taxableValue.toFixed(2)}</span>
+                        </div>
+                         <div className="flex justify-between">
+                            <span className="text-muted-foreground">GST</span>
+                            <span>₹{gstAmount.toFixed(2)}</span>
+                        </div>
+                        <Separator />
+                         <div className="flex justify-between font-semibold text-lg">
+                            <span>Grand Total</span>
+                            <span>₹{grandTotal.toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+
             </CardContent>
-            <CardFooter className="border-t px-6 py-4"><Button type="submit">Generate Invoice</Button></CardFooter>
+            <CardFooter className="border-t px-6 py-4 flex justify-between">
+              <Button type="submit">Generate Invoice</Button>
+            </CardFooter>
         </form></Form></Card>
     );
 }
@@ -544,7 +625,7 @@ function CollectionAutomationForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Automated Collection & Reminder</CardTitle><CardDescription>Configure automated payment reminders.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>Credit Period (Days)</Label><Input disabled value="30 (from Customer Master)" /></div>
                     <div className="grid gap-2"><Label>Due Date</Label><Input disabled value="Auto-calculated" /></div>
                      <FormField control={form.control} name="reminderSettings" render={({ field }) => (<FormItem><FormLabel>Reminder Settings</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="Strict">Strict</SelectItem><SelectItem value="Moderate">Moderate</SelectItem><SelectItem value="Lenient">Lenient</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
@@ -584,7 +665,7 @@ function VoucherReceiptForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Voucher Receipt</CardTitle><CardDescription>Record a payment received from a customer.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <div className="grid gap-2"><Label>Receipt No</Label><Input disabled placeholder="Auto-generated" /></div>
                      <FormField control={form.control} name="date" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
                         <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
@@ -592,7 +673,7 @@ function VoucherReceiptForm() {
                     <FormField control={form.control} name="customer" render={({ field }) => (<FormItem><FormLabel>Customer</FormLabel><FormControl><Input placeholder="Customer Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="amount" render={({ field }) => (<FormItem><FormLabel>Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                      <FormField control={form.control} name="mode" render={({ field }) => (<FormItem><FormLabel>Mode</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="Cheque">Cheque</SelectItem><SelectItem value="NEFT">NEFT</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                      <FormField control={form.control} name="refNo" render={({ field }) => (<FormItem><FormLabel>Ref No</FormLabel><FormControl><Input placeholder="Cheque/Transaction ID" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
@@ -607,7 +688,7 @@ export default function SalesPage() {
     <div className="flex min-h-screen w-full flex-col">
       <DashboardHeader title="Sales Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <Tabs defaultValue="inquiry">
+        <Tabs defaultValue="inquiry" className="w-full">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8">
             <TabsTrigger value="inquiry">Inquiry</TabsTrigger>
             <TabsTrigger value="quotation">Quotation</TabsTrigger>
