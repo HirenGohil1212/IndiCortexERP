@@ -397,6 +397,12 @@ function IQCForm() {
     const acceptedQty = form.watch('acceptedQty');
     const rejectedQty = totalQty - acceptedQty;
 
+    function onSubmit(data: IQCFormValues) {
+        console.log(data);
+        toast({ title: "QC Report Saved" });
+        form.reset();
+    }
+
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Incoming Quality Control (IQC)</CardTitle><CardDescription>Perform quality check on received goods.</CardDescription></CardHeader>
