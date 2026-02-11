@@ -198,7 +198,7 @@ export default function InventoryPage() {
       <DashboardHeader title="Warehouse Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="warehouse-master">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
             <TabsTrigger value="warehouse-master">Warehouse Master</TabsTrigger>
             <TabsTrigger value="opening-stock">Opening Stock</TabsTrigger>
             <TabsTrigger value="dispatch-srv">Dispatch SRV</TabsTrigger>

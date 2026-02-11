@@ -200,7 +200,7 @@ export default function QualityPage() {
       <DashboardHeader title="Quality Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="iqc">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
             <TabsTrigger value="iqc">Incoming (IQC)</TabsTrigger>
             <TabsTrigger value="mts">Transfer (MTS)</TabsTrigger>
             <TabsTrigger value="pqc">Process (PQC)</TabsTrigger>

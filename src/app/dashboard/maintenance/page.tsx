@@ -178,7 +178,7 @@ export default function MaintenancePage() {
       <DashboardHeader title="Maintenance Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="tool-master">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
             <TabsTrigger value="tool-master">Tool Master</TabsTrigger>
             <TabsTrigger value="maintenance-chart">Maintenance Chart</TabsTrigger>
             <TabsTrigger value="calibration-report">Calibration Report</TabsTrigger>

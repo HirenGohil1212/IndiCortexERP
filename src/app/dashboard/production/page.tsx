@@ -442,7 +442,7 @@ export default function ProductionPage() {
       <DashboardHeader title="Production Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="bom">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-10">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10">
                 <TabsTrigger value="bom">BOM</TabsTrigger>
                 <TabsTrigger value="routecard">Routecard</TabsTrigger>
                 <TabsTrigger value="material-issue">Material Issue</TabsTrigger>

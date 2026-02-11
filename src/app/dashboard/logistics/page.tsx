@@ -187,7 +187,7 @@ export default function LogisticsPage() {
       <DashboardHeader title="Logistics Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="transport-master">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
             <TabsTrigger value="transport-master">Transport Master</TabsTrigger>
             <TabsTrigger value="transport-order">Transport Order</TabsTrigger>
             <TabsTrigger value="challan-out">Challan Out</TabsTrigger>

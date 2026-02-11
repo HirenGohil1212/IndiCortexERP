@@ -231,7 +231,7 @@ export default function HRPage() {
       <DashboardHeader title="HR Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="employee-master">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
             <TabsTrigger value="employee-master">Employee Master</TabsTrigger>
             <TabsTrigger value="salary-head">Salary Head</TabsTrigger>
             <TabsTrigger value="salary-structure">Salary Structure</TabsTrigger>

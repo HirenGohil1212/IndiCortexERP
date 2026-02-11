@@ -746,7 +746,7 @@ export default function FinancePage() {
       <DashboardHeader title="Finance Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="journal-voucher">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
             <TabsTrigger value="journal-voucher">Journal Voucher</TabsTrigger>
             <TabsTrigger value="payment-receipt">Payment/Receipt</TabsTrigger>
             <TabsTrigger value="contra">Contra</TabsTrigger>

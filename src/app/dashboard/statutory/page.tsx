@@ -213,7 +213,7 @@ function TcsDetailsForm() {
 
 // 12.7 GSTR1 & GSTR2 Register
 const gstrRegisterSchema = z.object({
-  dateRange: z.object({ from: z.date(), to: z.date() }),
+  dateRange: z.object({ from: z.date(), to: z.date() }).optional(),
   transactionType: z.enum(["B2B", "B2C"]),
 });
 type GstrRegisterValues = z.infer<typeof gstrRegisterSchema>;
@@ -229,7 +229,7 @@ function GstrRegisterForm() {
                  <FormField
                     control={form.control} name="dateRange"
                     render={({ field }) => (
-                    <FormItem className="flex flex-col"><FormLabel>Date range</FormLabel><Popover><PopoverTrigger asChild><Button id="date" variant={"outline"} className={cn("justify-start text-left font-normal", !field.value?.from && "text-muted-foreground")}>
+                    <FormItem className="flex flex-col"><FormLabel>Date range</FormLabel><Popover><PopoverTrigger asChild><Button id="date" variant={"outline"} className={cn("justify-start text-left font-normal w-full", !field.value?.from && "text-muted-foreground")}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {field.value?.from ? ( field.value.to ? (<>{format(field.value.from, "LLL dd, y")} - {format(field.value.to, "LLL dd, y")}</>) : (format(field.value.from, "LLL dd, y"))) : (<span>Pick a date</span>)}
                     </Button></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar initialFocus mode="range" defaultMonth={field.value?.from} selected={field.value} onSelect={field.onChange} numberOfMonths={2}/></PopoverContent></Popover><FormMessage /></FormItem>
@@ -296,7 +296,7 @@ function BalanceSheetForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Balance Sheet</CardTitle><CardDescription>Generate a financial statement.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <FormField control={form.control} name="asOnDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>As On Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="asOnDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>As On Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full md:w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 <div className="grid md:grid-cols-4 gap-4">
                     <div className="grid gap-2"><Label>Assets Total</Label><Input disabled value="5,000,000.00" /></div>
                     <div className="grid gap-2"><Label>Liabilities Total</Label><Input disabled value="2,500,000.00" /></div>
@@ -315,7 +315,7 @@ export default function StatutoryPage() {
       <DashboardHeader title="Statutory Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="gst-taxation">
-          <TabsList className="grid w-full grid-cols-1 md:grid-cols-9">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9">
             <TabsTrigger value="gst-taxation">GST Master</TabsTrigger>
             <TabsTrigger value="gstr1-upload">GSTR-1</TabsTrigger>
             <TabsTrigger value="gst2a-recon">GST2A Recon</TabsTrigger>

@@ -519,7 +519,7 @@ export default function PurchasePage() {
       <DashboardHeader title="Purchase Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="material-indent">
-          <TabsList className="grid w-full grid-cols-1 md:grid-cols-8">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8">
             <TabsTrigger value="material-indent">Material Indent</TabsTrigger>
             <TabsTrigger value="purchase-order">Purchase Order</TabsTrigger>
             <TabsTrigger value="purchase-schedule">Purchase Schedule</TabsTrigger>
