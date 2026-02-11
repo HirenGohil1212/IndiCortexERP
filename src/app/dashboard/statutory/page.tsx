@@ -229,10 +229,10 @@ function GstrRegisterForm() {
                  <FormField
                     control={form.control} name="dateRange"
                     render={({ field }) => (
-                    <FormItem className="flex flex-col"><FormLabel>Date range</FormLabel><Popover><PopoverTrigger asChild><Button id="date" variant={"outline"} className={cn("justify-start text-left font-normal", !field.value.from && "text-muted-foreground")}>
+                    <FormItem className="flex flex-col"><FormLabel>Date range</FormLabel><Popover><PopoverTrigger asChild><Button id="date" variant={"outline"} className={cn("justify-start text-left font-normal", !field.value?.from && "text-muted-foreground")}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {field.value.from ? ( field.value.to ? (<>{format(field.value.from, "LLL dd, y")} - {format(field.value.to, "LLL dd, y")}</>) : (format(field.value.from, "LLL dd, y"))) : (<span>Pick a date</span>)}
-                    </Button></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar initialFocus mode="range" defaultMonth={field.value.from} selected={{from: field.value.from, to: field.value.to}} onSelect={field.onChange} numberOfMonths={2}/></PopoverContent></Popover><FormMessage /></FormItem>
+                        {field.value?.from ? ( field.value.to ? (<>{format(field.value.from, "LLL dd, y")} - {format(field.value.to, "LLL dd, y")}</>) : (format(field.value.from, "LLL dd, y"))) : (<span>Pick a date</span>)}
+                    </Button></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar initialFocus mode="range" defaultMonth={field.value?.from} selected={field.value} onSelect={field.onChange} numberOfMonths={2}/></PopoverContent></Popover><FormMessage /></FormItem>
                 )}/>
                 <FormField control={form.control} name="transactionType" render={({ field }) => (<FormItem><FormLabel>Transaction Type</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="B2B">B2B</SelectItem><SelectItem value="B2C">B2C</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                 <div className="grid gap-2"><Label>Total Tax Liability</Label><Input disabled value={"12,345.67"} /></div>
