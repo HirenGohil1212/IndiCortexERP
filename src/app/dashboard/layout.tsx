@@ -17,6 +17,7 @@ import {
   Truck,
   Users,
   Warehouse,
+  Wrench,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -59,6 +60,7 @@ const navItems = [
   { href: '/dashboard/hr', icon: Users, label: 'HR' },
   { href: '/dashboard/contractors', icon: HardHat, label: 'Contractors' },
   { href: '/dashboard/quality', icon: ShieldCheck, label: 'Quality' },
+  { href: '/dashboard/maintenance', icon: Wrench, label: 'Maintenance' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
 ];
 
