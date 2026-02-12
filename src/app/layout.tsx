@@ -10,7 +10,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'ApexERP - Unified Manufacturing Management',
+  title: 'IndiCortexERP - Unified Manufacturing Management',
   description:
     'A robust, industrial-grade Manufacturing ERP for streamlined operations.',
 };

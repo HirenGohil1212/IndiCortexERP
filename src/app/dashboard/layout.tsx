@@ -86,7 +86,7 @@ function NavContent() {
         >
           <ApexLogo className="size-7 shrink-0" />
           <span className="text-lg font-semibold group-data-[collapsible=icon]:opacity-0">
-            ApexERP
+            IndiCortexERP
           </span>
         </div>
       </SidebarHeader>
