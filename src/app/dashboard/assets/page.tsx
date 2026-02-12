@@ -19,6 +19,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 11.1 Fix Asset Master
 const fixAssetMasterSchema = z.object({
@@ -43,7 +44,7 @@ function FixAssetMasterForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Fixed Asset</CardTitle><CardDescription>Add a new asset to the master list.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <div className="grid gap-2"><Label>Asset Tag</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="name" render={({ field }) => (<FormItem><FormLabel>Name</FormLabel><FormControl><Input placeholder="e.g. Dell Laptop" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="group" render={({ field }) => (
@@ -53,7 +54,7 @@ function FixAssetMasterForm() {
                 )} />
                 <FormField control={form.control} name="purchaseDate" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Purchase Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="value" render={({ field }) => (<FormItem><FormLabel>Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -82,12 +83,12 @@ function AssetAdditionMemoForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Asset Addition Memo</CardTitle><CardDescription>Log the addition of a new asset.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <FormField control={form.control} name="assetRef" render={({ field }) => (<FormItem><FormLabel>Asset Ref</FormLabel><FormControl><Input placeholder="Select Asset" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="invoiceRef" render={({ field }) => (<FormItem><FormLabel>Invoice Ref</FormLabel><FormControl><Input placeholder="Purchase Invoice No" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="installationDate" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Installation Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="depreciationRate" render={({ field }) => (<FormItem><FormLabel>Depreciation Rate (%)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -116,13 +117,13 @@ function AssetAllocationMasterForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Asset Allocation</CardTitle><CardDescription>Assign an asset to a user or department.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <FormField control={form.control} name="assetTag" render={({ field }) => (<FormItem><FormLabel>Asset Tag</FormLabel><FormControl><Input placeholder="Select Asset" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="employeeName" render={({ field }) => (<FormItem><FormLabel>Employee Name</FormLabel><FormControl><Input placeholder="Select Employee" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="department" render={({ field }) => (<FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g. IT, Sales" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="dateAssigned" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Date Assigned</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
             </CardContent>
@@ -147,11 +148,11 @@ function AssetSaleMemoForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Asset Sale Memo</CardTitle><CardDescription>Record the disposal or sale of an asset.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <FormField control={form.control} name="assetTag" render={({ field }) => (<FormItem><FormLabel>Asset Tag</FormLabel><FormControl><Input placeholder="Select Asset" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="saleDate" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Sale Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="saleValue" render={({ field }) => (<FormItem><FormLabel>Sale Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -185,7 +186,7 @@ function AssetDepreciationVoucherForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Asset Depreciation Voucher</CardTitle><CardDescription>Perform year-end depreciation calculation.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-5 gap-4">
+            <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 <FormField control={form.control} name="year" render={({ field }) => (<FormItem><FormLabel>Year</FormLabel><FormControl><Input placeholder="YYYY" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="assetTag" render={({ field }) => (<FormItem><FormLabel>Asset Tag</FormLabel><FormControl><Input placeholder="Select Asset" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="openingBalance" render={({ field }) => (<FormItem><FormLabel>Opening Balance</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -203,13 +204,16 @@ export default function AssetsPage() {
       <DashboardHeader title="Asset Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="asset-master">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-            <TabsTrigger value="asset-master">Asset Master</TabsTrigger>
-            <TabsTrigger value="asset-addition">Asset Addition</TabsTrigger>
-            <TabsTrigger value="asset-allocation">Asset Allocation</TabsTrigger>
-            <TabsTrigger value="asset-sale">Asset Sale</TabsTrigger>
-            <TabsTrigger value="asset-depreciation">Asset Depreciation</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="asset-master">Asset Master</TabsTrigger>
+              <TabsTrigger value="asset-addition">Asset Addition</TabsTrigger>
+              <TabsTrigger value="asset-allocation">Asset Allocation</TabsTrigger>
+              <TabsTrigger value="asset-sale">Asset Sale</TabsTrigger>
+              <TabsTrigger value="asset-depreciation">Asset Depreciation</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="asset-master" className="mt-4">
             <FixAssetMasterForm />
           </TabsContent>

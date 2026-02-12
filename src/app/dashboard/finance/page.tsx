@@ -20,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 1. Journal Voucher
 const journalVoucherSchema = z.object({
@@ -64,7 +65,7 @@ function JournalVoucherForm() {
             <CardDescription>Create an adjustment entry for your accounts.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <div className="grid md:grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="grid gap-2">
                 <Label>Journal No</Label>
                 <Input disabled placeholder="Auto-generated" />
@@ -73,7 +74,7 @@ function JournalVoucherForm() {
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col pt-2">
+                  <FormItem className="flex flex-col">
                     <FormLabel>Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -81,7 +82,7 @@ function JournalVoucherForm() {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
+                              "w-full justify-start text-left font-normal",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -264,7 +265,7 @@ function PaymentReceiptForm() {
                         <FormControl>
                           <Button
                             variant={"outline"}
-                            className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                            className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}
                           >
                             {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -382,7 +383,7 @@ function ContraVoucherForm() {
                         <CardDescription>Record a cash deposit or withdrawal.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-6">
-                       <div className="grid md:grid-cols-4 gap-4">
+                       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <FormField
                                 control={form.control} name="date"
                                 render={({ field }) => (
@@ -391,7 +392,7 @@ function ContraVoucherForm() {
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
-                                                <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                                                <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
                                                     {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>
@@ -466,7 +467,7 @@ function GstJournalForm() {
                         <CardDescription>Record a tax adjustment.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-6">
-                        <div className="grid md:grid-cols-4 gap-4">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <FormField
                                 control={form.control} name="date"
                                 render={({ field }) => (
@@ -475,7 +476,7 @@ function GstJournalForm() {
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
-                                                <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                                                <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
                                                     {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>
@@ -561,7 +562,7 @@ function BankReconciliationForm() {
                         <CardDescription>Match your books with the bank statement.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-6">
-                        <div className="grid md:grid-cols-3 gap-4">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <FormField control={form.control} name="bankAccount" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Bank Account</FormLabel>
@@ -577,7 +578,7 @@ function BankReconciliationForm() {
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
-                                                <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                                                <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
                                                     {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>
@@ -653,7 +654,7 @@ function CreditCardStatementForm() {
                         <CardDescription>Record a single transaction from a credit card statement.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-6">
-                        <div className="grid md:grid-cols-3 gap-4">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                              <FormField control={form.control} name="cardNumber" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Card Number</FormLabel>
@@ -669,7 +670,7 @@ function CreditCardStatementForm() {
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
-                                                <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                                                <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
                                                     {field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>
@@ -684,7 +685,7 @@ function CreditCardStatementForm() {
                                 )}
                             />
                         </div>
-                        <div className="grid md:grid-cols-4 gap-4">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                              <FormField
                                 control={form.control} name="transactionDate"
                                 render={({ field }) => (
@@ -693,7 +694,7 @@ function CreditCardStatementForm() {
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <FormControl>
-                                                <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                                                <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
                                                     {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                 </Button>
@@ -746,14 +747,17 @@ export default function FinancePage() {
       <DashboardHeader title="Finance Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="journal-voucher">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-            <TabsTrigger value="journal-voucher">Journal Voucher</TabsTrigger>
-            <TabsTrigger value="payment-receipt">Payment/Receipt</TabsTrigger>
-            <TabsTrigger value="contra">Contra</TabsTrigger>
-            <TabsTrigger value="gst-journal">GST Journal</TabsTrigger>
-            <TabsTrigger value="bank-reconciliation">Bank Reconciliation</TabsTrigger>
-            <TabsTrigger value="credit-card">Credit Card</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="journal-voucher">Journal Voucher</TabsTrigger>
+              <TabsTrigger value="payment-receipt">Payment/Receipt</TabsTrigger>
+              <TabsTrigger value="contra">Contra</TabsTrigger>
+              <TabsTrigger value="gst-journal">GST Journal</TabsTrigger>
+              <TabsTrigger value="bank-reconciliation">Bank Reconciliation</TabsTrigger>
+              <TabsTrigger value="credit-card">Credit Card</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="journal-voucher" className="mt-4">
             <JournalVoucherForm />
           </TabsContent>
@@ -777,5 +781,3 @@ export default function FinancePage() {
     </div>
   );
 }
-
-    

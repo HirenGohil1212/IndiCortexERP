@@ -24,6 +24,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { InvoiceTemplate } from '@/components/invoice-template';
 import { ApexLogo } from '@/components/icons';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 1.1 Inquiry Received
 const inquiryItemSchema = z.object({
@@ -102,7 +103,7 @@ function InquiryForm() {
                 control={form.control}
                 name="inquiryDate"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col pt-2">
+                  <FormItem className="flex flex-col">
                     <FormLabel>Inquiry Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -110,7 +111,7 @@ function InquiryForm() {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
+                              "w-full justify-start text-left font-normal",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -322,8 +323,8 @@ function QuotationForm() {
                     <FormItem><FormLabel>Inquiry Ref</FormLabel><FormControl><Input placeholder="INQ-001" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="validUntil" render={({ field }) => (
-                    <FormItem className="flex flex-col pt-2"><FormLabel>Valid Until</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                    <FormItem className="flex flex-col"><FormLabel>Valid Until</FormLabel><Popover><PopoverTrigger asChild><FormControl>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
                             {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
@@ -397,7 +398,7 @@ function CustomerPOForm() {
                     )} />
                     <FormField control={form.control} name="poDate" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>PO Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="poFile" render={({ field }) => (
@@ -405,7 +406,7 @@ function CustomerPOForm() {
                     )} />
                     <FormField control={form.control} name="confirmedDeliveryDate" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Confirmed Delivery Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                 </div>
@@ -436,7 +437,7 @@ function SaleOrderForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Sale Order</CardTitle><CardDescription>Lock inventory for a customer order.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>SO No</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="customerPoRef" render={({ field }) => (<FormItem><FormLabel>Customer PO Ref</FormLabel><FormControl><Input placeholder="Customer PO Number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="status" render={({ field }) => (<FormItem><FormLabel>Status</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="Pending">Pending</SelectItem><SelectItem value="Dispatched">Dispatched</SelectItem><SelectItem value="Closed">Closed</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
@@ -538,7 +539,7 @@ function SaleInvoiceForm() {
                     <FormField control={form.control} name="soRef" render={({ field }) => (<FormItem><FormLabel>Sale Order Ref</FormLabel><FormControl><Input placeholder="SO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="date" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                      <FormField control={form.control} name="placeOfSupply" render={({ field }) => (<FormItem><FormLabel>Place of Supply</FormLabel><FormControl><Input placeholder="e.g. Mumbai" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -625,7 +626,7 @@ function CollectionAutomationForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Automated Collection & Reminder</CardTitle><CardDescription>Configure automated payment reminders.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>Credit Period (Days)</Label><Input disabled value="30 (from Customer Master)" /></div>
                     <div className="grid gap-2"><Label>Due Date</Label><Input disabled value="Auto-calculated" /></div>
                      <FormField control={form.control} name="reminderSettings" render={({ field }) => (<FormItem><FormLabel>Reminder Settings</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="Strict">Strict</SelectItem><SelectItem value="Moderate">Moderate</SelectItem><SelectItem value="Lenient">Lenient</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
@@ -668,7 +669,7 @@ function VoucherReceiptForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <div className="grid gap-2"><Label>Receipt No</Label><Input disabled placeholder="Auto-generated" /></div>
                      <FormField control={form.control} name="date" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="customer" render={({ field }) => (<FormItem><FormLabel>Customer</FormLabel><FormControl><Input placeholder="Customer Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="amount" render={({ field }) => (<FormItem><FormLabel>Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -689,16 +690,19 @@ export default function SalesPage() {
       <DashboardHeader title="Sales Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="inquiry" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8">
-            <TabsTrigger value="inquiry">Inquiry</TabsTrigger>
-            <TabsTrigger value="quotation">Quotation</TabsTrigger>
-            <TabsTrigger value="customer-po">Customer PO</TabsTrigger>
-            <TabsTrigger value="sale-order">Sale Order</TabsTrigger>
-            <TabsTrigger value="dispatch">Dispatch</TabsTrigger>
-            <TabsTrigger value="invoice">Invoice</TabsTrigger>
-            <TabsTrigger value="collection-automation">Collection Automation</TabsTrigger>
-            <TabsTrigger value="voucher-receipt">Voucher Receipt</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="inquiry">Inquiry</TabsTrigger>
+              <TabsTrigger value="quotation">Quotation</TabsTrigger>
+              <TabsTrigger value="customer-po">Customer PO</TabsTrigger>
+              <TabsTrigger value="sale-order">Sale Order</TabsTrigger>
+              <TabsTrigger value="dispatch">Dispatch</TabsTrigger>
+              <TabsTrigger value="invoice">Invoice</TabsTrigger>
+              <TabsTrigger value="collection-automation">Collection Automation</TabsTrigger>
+              <TabsTrigger value="voucher-receipt">Voucher Receipt</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="inquiry" className="mt-4"><InquiryForm /></TabsContent>
           <TabsContent value="quotation" className="mt-4"><QuotationForm /></TabsContent>
           <TabsContent value="customer-po" className="mt-4"><CustomerPOForm /></TabsContent>

@@ -20,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 9.1 Tool Master
 const toolMasterSchema = z.object({
@@ -43,7 +44,7 @@ function ToolMasterForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Tool</CardTitle><CardDescription>Add a new tool or asset to the master list.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2"><Label>Asset Code</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="toolName" render={({ field }) => (<FormItem><FormLabel>Tool Name</FormLabel><FormControl><Input placeholder="e.g. Lathe Machine" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="location" render={({ field }) => (<FormItem><FormLabel>Location</FormLabel><FormControl><Input placeholder="e.g. Shop Floor 1" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -77,17 +78,17 @@ function ToolMaintenanceChartForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Tool Maintenance Chart</CardTitle><CardDescription>Schedule a maintenance task for a tool.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <FormField control={form.control} name="toolRef" render={({ field }) => (<FormItem><FormLabel>Tool Ref</FormLabel><FormControl><Input placeholder="Select Tool" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="scheduledDate" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Scheduled Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                 </div>
                  <div>
                     <Label>Task List</Label>
-                    <div className="flex items-center space-x-4 pt-2">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2">
                         <FormField control={form.control} name="tasks.greasing" render={({ field }) => (<FormItem className="flex items-center space-x-2 space-y-0"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><FormLabel className="font-normal">Greasing</FormLabel></FormItem>)} />
                         <FormField control={form.control} name="tasks.cleaning" render={({ field }) => (<FormItem className="flex items-center space-x-2 space-y-0"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><FormLabel className="font-normal">Cleaning</FormLabel></FormItem>)} />
                         <FormField control={form.control} name="tasks.inspection" render={({ field }) => (<FormItem className="flex items-center space-x-2 space-y-0"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><FormLabel className="font-normal">Inspection</FormLabel></FormItem>)} />
@@ -119,11 +120,11 @@ function ToolCalibrationReportForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Tool Calibration Report</CardTitle><CardDescription>Log the results of a tool calibration.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-5 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <FormField control={form.control} name="toolRef" render={({ field }) => (<FormItem><FormLabel>Tool Ref</FormLabel><FormControl><Input placeholder="Select Tool" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="calibrationDate" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Calibration Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="standardValue" render={({ field }) => (<FormItem><FormLabel>Standard Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -156,7 +157,7 @@ function ToolMaintenanceMemoForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Tool Maintenance/Rectification Memo</CardTitle><CardDescription>Log a repair or unscheduled maintenance job.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="grid gap-2"><Label>Job ID</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="toolRef" render={({ field }) => (<FormItem><FormLabel>Tool Ref</FormLabel><FormControl><Input placeholder="Select Tool" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="technician" render={({ field }) => (<FormItem><FormLabel>Technician</FormLabel><FormControl><Input placeholder="Technician Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -178,12 +179,15 @@ export default function MaintenancePage() {
       <DashboardHeader title="Maintenance Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="tool-master">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-            <TabsTrigger value="tool-master">Tool Master</TabsTrigger>
-            <TabsTrigger value="maintenance-chart">Maintenance Chart</TabsTrigger>
-            <TabsTrigger value="calibration-report">Calibration Report</TabsTrigger>
-            <TabsTrigger value="rectification-memo">Rectification Memo</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="tool-master">Tool Master</TabsTrigger>
+              <TabsTrigger value="maintenance-chart">Maintenance Chart</TabsTrigger>
+              <TabsTrigger value="calibration-report">Calibration Report</TabsTrigger>
+              <TabsTrigger value="rectification-memo">Rectification Memo</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="tool-master" className="mt-4">
             <ToolMasterForm />
           </TabsContent>

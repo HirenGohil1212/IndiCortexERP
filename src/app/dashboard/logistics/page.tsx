@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 6.1 Transport Master
 const transportMasterSchema = z.object({
@@ -43,7 +44,7 @@ function TransportMasterForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Transporter</CardTitle><CardDescription>Add a new transporter to the master list.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <FormField control={form.control} name="transporterName" render={({ field }) => (<FormItem><FormLabel>Transporter Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="ownerName" render={({ field }) => (<FormItem><FormLabel>Owner Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="mobile" render={({ field }) => (<FormItem><FormLabel>Mobile</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -73,12 +74,12 @@ function TransportOrderForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Transport Order</CardTitle><CardDescription>Book a truck for a shipment.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                  <div className="grid gap-2"><Label>Order No</Label><Input disabled placeholder="Auto-generated" /></div>
                  <FormField control={form.control} name="transporter" render={({ field }) => (<FormItem><FormLabel>Transporter</FormLabel><FormControl><Input placeholder="Select Transporter" {...field} /></FormControl><FormMessage /></FormItem>)} />
                  <FormField control={form.control} name="pickupDate" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Pickup Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                  <FormField control={form.control} name="destination" render={({ field }) => (<FormItem><FormLabel>Destination</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -115,7 +116,7 @@ function ChallanOutForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Challan Out</CardTitle><CardDescription>Create a delivery document.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="grid gap-2"><Label>Challan No</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="transportOrderRef" render={({ field }) => (<FormItem><FormLabel>Transport Order Ref</FormLabel><FormControl><Input placeholder="TO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
@@ -164,11 +165,11 @@ function FreightBillbookForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Freight Billbook</CardTitle><CardDescription>Log an invoice from a transporter.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-5 gap-4">
+            <CardContent className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
                 <div className="grid gap-2"><Label>Bill No</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="date" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="lrNo" render={({ field }) => (<FormItem><FormLabel>LR No</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -187,12 +188,15 @@ export default function LogisticsPage() {
       <DashboardHeader title="Logistics Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="transport-master">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-            <TabsTrigger value="transport-master">Transport Master</TabsTrigger>
-            <TabsTrigger value="transport-order">Transport Order</TabsTrigger>
-            <TabsTrigger value="challan-out">Challan Out</TabsTrigger>
-            <TabsTrigger value="freight-billbook">Freight Billbook</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="transport-master">Transport Master</TabsTrigger>
+              <TabsTrigger value="transport-order">Transport Order</TabsTrigger>
+              <TabsTrigger value="challan-out">Challan Out</TabsTrigger>
+              <TabsTrigger value="freight-billbook">Freight Billbook</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="transport-master" className="mt-4">
             <TransportMasterForm />
           </TabsContent>

@@ -20,6 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 3.1 Production Flow Details (BOM)
 const rawMaterialSchema = z.object({
@@ -73,7 +74,7 @@ function ProductionFlowForm() {
                 <CardDescription>Define a process with its required raw materials (Bill of Materials).</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <FormField
                     control={form.control}
                     name="finishedGood"
@@ -220,13 +221,13 @@ function ProductionRoutecardForm() {
     function onSubmit(data: RoutecardValues) { console.log(data); toast({ title: "Routecard Created" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>New Production Routecard</CardTitle><CardDescription>Track the progress of a production batch.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-3 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="grid gap-2"><Label>Route Card No</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="batchNo" render={({ field }) => (<FormItem><FormLabel>Batch No</FormLabel><FormControl><Input placeholder="Batch-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="product" render={({ field }) => (<FormItem><FormLabel>Product</FormLabel><FormControl><Input placeholder="Product Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="planQty" render={({ field }) => (<FormItem><FormLabel>Plan Quantity</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="startDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Start Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="endDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>End Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="startDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Start Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="endDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>End Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
         </CardContent>
         <CardFooter className="border-t px-6 py-4"><Button type="submit">Create Routecard</Button></CardFooter>
     </form></Form></Card>
@@ -246,7 +247,7 @@ function MaterialIssueForm() {
     function onSubmit(data: MaterialIssueValues) { console.log(data); toast({ title: "Material Issued" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>Material Issue</CardTitle><CardDescription>Issue materials from inventory to the production floor.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-4 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid gap-2"><Label>Issue ID</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="routeCardRef" render={({ field }) => (<FormItem><FormLabel>Route Card Ref</FormLabel><FormControl><Input placeholder="RC-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -272,7 +273,7 @@ function MTAForm() {
     function onSubmit(data: MTAValues) { console.log(data); toast({ title: "MTA Created" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>Material Transfer Acknowledgement</CardTitle><CardDescription>Record inter-departmental material movement.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-3 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="grid gap-2"><Label>MTA No</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="fromDept" render={({ field }) => (<FormItem><FormLabel>From Dept</FormLabel><FormControl><Input placeholder="e.g. Stores" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="toDept" render={({ field }) => (<FormItem><FormLabel>To Dept</FormLabel><FormControl><Input placeholder="e.g. Assembly" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -300,8 +301,8 @@ function ProductionReportForm() {
     function onSubmit(data: ProductionReportValues) { console.log(data); toast({ title: "Production Logged" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>Daily Production Report</CardTitle><CardDescription>Log daily output and rejections.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-3 gap-4">
-            <FormField control={form.control} name="date" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <FormField control={form.control} name="date" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="shift" render={({ field }) => (<FormItem><FormLabel>Shift</FormLabel><FormControl><Input placeholder="e.g. A" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="machineNo" render={({ field }) => (<FormItem><FormLabel>Machine No</FormLabel><FormControl><Input placeholder="Machine ID" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="operator" render={({ field }) => (<FormItem><FormLabel>Operator</FormLabel><FormControl><Input placeholder="Operator Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -326,7 +327,7 @@ function JobOrderForm() {
     function onSubmit(data: JobOrderValues) { console.log(data); toast({ title: "Job Order Created" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>External Job Order</CardTitle><CardDescription>Outsource work to an external contractor.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-4 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid gap-2"><Label>Job Order No</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="contractor" render={({ field }) => (<FormItem><FormLabel>Contractor</FormLabel><FormControl><Input placeholder="Contractor Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="itemSent" render={({ field }) => (<FormItem><FormLabel>Item Sent</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -351,7 +352,7 @@ function ChallanOutForm() {
     function onSubmit(data: ChallanOutValues) { console.log(data); toast({ title: "Challan Created" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>Challan Out</CardTitle><CardDescription>Send materials out for external job work.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-4 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid gap-2"><Label>Challan No</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="jobOrderRef" render={({ field }) => (<FormItem><FormLabel>Job Order Ref</FormLabel><FormControl><Input placeholder="JO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -376,7 +377,7 @@ function ExternalGRNForm() {
     function onSubmit(data: ExternalGRNValues) { console.log(data); toast({ title: "External GRN Created" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>External GRN & IQC</CardTitle><CardDescription>Receive and inspect goods from external job work.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-4 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid gap-2"><Label>GRN No</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="challanRef" render={({ field }) => (<FormItem><FormLabel>Challan Ref</FormLabel><FormControl><Input placeholder="CHN-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="receivedQty" render={({ field }) => (<FormItem><FormLabel>Received Qty</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -400,7 +401,7 @@ function JobWorkBillbookForm() {
     function onSubmit(data: JobWorkBillbookValues) { console.log(data); toast({ title: "Bill Logged" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>Job Work Billbook</CardTitle><CardDescription>Log a bill received from a contractor.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-4 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid gap-2"><Label>Bill No</Label><Input disabled placeholder="Auto-generated" /></div>
             <FormField control={form.control} name="jobOrderRef" render={({ field }) => (<FormItem><FormLabel>Job Order Ref</FormLabel><FormControl><Input placeholder="JO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="laborCharges" render={({ field }) => (<FormItem><FormLabel>Labor Charges</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -424,11 +425,11 @@ function RoutecardClosureForm() {
     function onSubmit(data: RoutecardClosureValues) { console.log(data); toast({ title: "Routecard Closed" }); form.reset(); }
     return <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader><CardTitle>Routecard Closure</CardTitle><CardDescription>Finish a production batch and record final quantities.</CardDescription></CardHeader>
-        <CardContent className="grid md:grid-cols-4 gap-4">
+        <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <FormField control={form.control} name="routeCardRef" render={({ field }) => (<FormItem><FormLabel>Route Card Ref</FormLabel><FormControl><Input placeholder="RC-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="finalFgQty" render={({ field }) => (<FormItem><FormLabel>Final FG Qty</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
             <FormField control={form.control} name="scrapGenerated" render={({ field }) => (<FormItem><FormLabel>Scrap Generated</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="closureDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Closure Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="closureDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Closure Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant="outline" className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
         </CardContent>
         <CardFooter className="border-t px-6 py-4"><Button type="submit">Close Routecard</Button></CardFooter>
     </form></Form></Card>
@@ -442,7 +443,8 @@ export default function ProductionPage() {
       <DashboardHeader title="Production Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="bom">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10">
+          <ScrollArea>
+            <TabsList>
                 <TabsTrigger value="bom">BOM</TabsTrigger>
                 <TabsTrigger value="routecard">Routecard</TabsTrigger>
                 <TabsTrigger value="material-issue">Material Issue</TabsTrigger>
@@ -454,6 +456,8 @@ export default function ProductionPage() {
                 <TabsTrigger value="job-bill">Job Bill</TabsTrigger>
                 <TabsTrigger value="routecard-closure">Closure</TabsTrigger>
             </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
             <TabsContent value="bom" className="mt-4"><ProductionFlowForm /></TabsContent>
             <TabsContent value="routecard" className="mt-4"><ProductionRoutecardForm /></TabsContent>
             <TabsContent value="material-issue" className="mt-4"><MaterialIssueForm /></TabsContent>

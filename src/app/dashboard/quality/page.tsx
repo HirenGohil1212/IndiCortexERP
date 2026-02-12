@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 
 // 7.1 IQC (Incoming)
@@ -42,7 +43,7 @@ function IqcForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Incoming Quality Control</CardTitle><CardDescription>Perform quality check on incoming materials.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <FormField control={form.control} name="grnRef" render={({ field }) => (<FormItem><FormLabel>GRN Ref</FormLabel><FormControl><Input placeholder="GRN-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="sampleQty" render={({ field }) => (<FormItem><FormLabel>Sample Qty</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -80,7 +81,7 @@ function MtsForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Material Transfer Slip QC</CardTitle><CardDescription>Check materials during inter-departmental movement.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <FormField control={form.control} name="mtaRef" render={({ field }) => (<FormItem><FormLabel>MTA Ref</FormLabel><FormControl><Input placeholder="MTA-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="qtyChecked" render={({ field }) => (<FormItem><FormLabel>Qty Checked</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -112,7 +113,7 @@ function PqcForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Process Quality Control</CardTitle><CardDescription>Perform in-process quality checks on the production line.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                 <div className="grid md:grid-cols-3 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <FormField control={form.control} name="routeCardRef" render={({ field }) => (<FormItem><FormLabel>Route Card Ref</FormLabel><FormControl><Input placeholder="RC-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="stageName" render={({ field }) => (<FormItem><FormLabel>Stage Name</FormLabel><FormControl><Input placeholder="e.g. Assembly" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="operator" render={({ field }) => (<FormItem><FormLabel>Operator</FormLabel><FormControl><Input placeholder="Operator Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -140,7 +141,7 @@ function PdiForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Pre-Dispatch Inspection (PDI)</CardTitle><CardDescription>Conduct a final audit before dispatching goods.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <FormField control={form.control} name="soRef" render={({ field }) => (<FormItem><FormLabel>SO Ref</FormLabel><FormControl><Input placeholder="SO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="boxNo" render={({ field }) => (<FormItem><FormLabel>Box No</FormLabel><FormControl><Input placeholder="Box-01" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="packagingCondition" render={({ field }) => (
@@ -175,7 +176,7 @@ function QrdForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Quality Rejection Decision</CardTitle><CardDescription>Decide the course of action for rejected materials.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <FormField control={form.control} name="rejectionId" render={({ field }) => (<FormItem><FormLabel>Rejection ID</FormLabel><FormControl><Input placeholder="e.g. REJ-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="qty" render={({ field }) => (<FormItem><FormLabel>Quantity</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -200,13 +201,16 @@ export default function QualityPage() {
       <DashboardHeader title="Quality Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="iqc">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-            <TabsTrigger value="iqc">Incoming (IQC)</TabsTrigger>
-            <TabsTrigger value="mts">Transfer (MTS)</TabsTrigger>
-            <TabsTrigger value="pqc">Process (PQC)</TabsTrigger>
-            <TabsTrigger value="pdi">Pre-Dispatch (PDI)</TabsTrigger>
-            <TabsTrigger value="qrd">Rejection (QRD)</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="iqc">Incoming (IQC)</TabsTrigger>
+              <TabsTrigger value="mts">Transfer (MTS)</TabsTrigger>
+              <TabsTrigger value="pqc">Process (PQC)</TabsTrigger>
+              <TabsTrigger value="pdi">Pre-Dispatch (PDI)</TabsTrigger>
+              <TabsTrigger value="qrd">Rejection (QRD)</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="iqc" className="mt-4">
             <IqcForm />
           </TabsContent>

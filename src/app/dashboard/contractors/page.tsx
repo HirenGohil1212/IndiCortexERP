@@ -20,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 8.1 Employee Master (Contractor Staff)
 const contractorEmployeeSchema = z.object({
@@ -45,7 +46,7 @@ function ContractorEmployeeForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Contractor Employee</CardTitle><CardDescription>Register a new contract labor worker.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="grid gap-2"><Label>Worker ID</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="contractorFirm" render={({ field }) => (<FormItem><FormLabel>Contractor Firm</FormLabel><FormControl><Input placeholder="Contractor Firm Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="workerName" render={({ field }) => (<FormItem><FormLabel>Worker Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -146,15 +147,15 @@ function ContractorSalarySheetForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Contractor Salary Sheet</CardTitle><CardDescription>Calculate monthly payout for a contractor.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <FormField control={form.control} name="contractorName" render={({ field }) => (<FormItem><FormLabel>Contractor Name</FormLabel><FormControl><Input placeholder="Select Contractor" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="month" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Month</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                 </div>
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <FormField control={form.control} name="workerName" render={({ field }) => (<FormItem><FormLabel>Worker Name</FormLabel><FormControl><Input placeholder="Select Worker" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="daysWorked" render={({ field }) => (<FormItem><FormLabel>Days Worked</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="overtimeHours" render={({ field }) => (<FormItem><FormLabel>Overtime Hours</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -194,7 +195,7 @@ function ContractorAdvanceMemoForm() {
                     <FormField control={form.control} name="contractorName" render={({ field }) => (<FormItem><FormLabel>Contractor Name</FormLabel><FormControl><Input placeholder="Select Contractor" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="date" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="amount" render={({ field }) => (<FormItem><FormLabel>Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -222,7 +223,7 @@ function ContractorVoucherPaymentForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Contractor Payment</CardTitle><CardDescription>Record a payment made to a contractor.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4 items-end">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                 <div className="grid gap-2"><Label>Voucher No</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="contractorName" render={({ field }) => (<FormItem><FormLabel>Contractor Name</FormLabel><FormControl><Input placeholder="Contractor Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="salarySheetRef" render={({ field }) => (<FormItem><FormLabel>Salary Sheet Ref</FormLabel><FormControl><Input placeholder="Sheet ID" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -241,14 +242,17 @@ export default function ContractorsPage() {
       <DashboardHeader title="Contractors Employee Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="employee-master">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-            <TabsTrigger value="employee-master">Employee Master</TabsTrigger>
-            <TabsTrigger value="salary-head">Salary Head</TabsTrigger>
-            <TabsTrigger value="salary-structure">Salary Structure</TabsTrigger>
-            <TabsTrigger value="salary-sheet">Salary Sheet</TabsTrigger>
-            <TabsTrigger value="advance-memo">Advance Memo</TabsTrigger>
-            <TabsTrigger value="voucher-payment">Voucher Payment</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="employee-master">Employee Master</TabsTrigger>
+              <TabsTrigger value="salary-head">Salary Head</TabsTrigger>
+              <TabsTrigger value="salary-structure">Salary Structure</TabsTrigger>
+              <TabsTrigger value="salary-sheet">Salary Sheet</TabsTrigger>
+              <TabsTrigger value="advance-memo">Advance Memo</TabsTrigger>
+              <TabsTrigger value="voucher-payment">Voucher Payment</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="employee-master" className="mt-4">
             <ContractorEmployeeForm />
           </TabsContent>

@@ -20,6 +20,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 12.1 GST Taxation Master
 const gstTaxationSchema = z.object({
@@ -45,7 +46,7 @@ function GstTaxationMasterForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>GST Taxation Master</CardTitle><CardDescription>Set up tax rules for HSN codes.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-5 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <FormField control={form.control} name="hsnCode" render={({ field }) => (<FormItem><FormLabel>HSN Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="description" render={({ field }) => (<FormItem><FormLabel>Description</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="igst" render={({ field }) => (<FormItem><FormLabel>IGST %</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -78,8 +79,8 @@ function Gstr1UploadForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>GSTR-1 Sales Upload</CardTitle><CardDescription>Prepare sales data for GSTR-1 filing.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-3 gap-4">
-                <FormField control={form.control} name="month" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Month</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <FormField control={form.control} name="month" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Month</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="invoiceNo" render={({ field }) => (<FormItem><FormLabel>Invoice No</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="customerGstin" render={({ field }) => (<FormItem><FormLabel>Customer GSTIN</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="taxableValue" render={({ field }) => (<FormItem><FormLabel>Taxable Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -111,8 +112,8 @@ function Gst2aReconciliationForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>GST2A Reconciliation</CardTitle><CardDescription>Compare purchase records with the GST portal data.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-5 gap-4">
-                <FormField control={form.control} name="month" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Month</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <FormField control={form.control} name="month" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Month</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="vendorGstin" render={({ field }) => (<FormItem><FormLabel>Vendor GSTIN</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="totalItc" render={({ field }) => (<FormItem><FormLabel>Total Input Tax Credit (ITC)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="matchedAmount" render={({ field }) => (<FormItem><FormLabel>Matched Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -140,10 +141,10 @@ function GstDepositChallanForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>GST Deposit Challan</CardTitle><CardDescription>Record a GST payment challan.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2"><Label>Challan No</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="cpin" render={({ field }) => (<FormItem><FormLabel>CPIN</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                <FormField control={form.control} name="date" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="date" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="bank" render={({ field }) => (<FormItem><FormLabel>Bank</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="taxType" render={({ field }) => (<FormItem><FormLabel>Tax Type</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="CGST">CGST</SelectItem><SelectItem value="SGST">SGST</SelectItem><SelectItem value="IGST">IGST</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="amount" render={({ field }) => (<FormItem><FormLabel>Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -171,7 +172,7 @@ function TdsTraceForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>TDS Trace & Details</CardTitle><CardDescription>Track tax deducted at source.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <FormField control={form.control} name="section" render={({ field }) => (<FormItem><FormLabel>Section</FormLabel><FormControl><Input placeholder="e.g., 194C" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="deducteeName" render={({ field }) => (<FormItem><FormLabel>Deductee Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="paymentAmount" render={({ field }) => (<FormItem><FormLabel>Payment Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -200,7 +201,7 @@ function TcsDetailsForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>TCS Details</CardTitle><CardDescription>Track tax collected at source.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <FormField control={form.control} name="customerName" render={({ field }) => (<FormItem><FormLabel>Customer Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="saleValue" render={({ field }) => (<FormItem><FormLabel>Sale Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="tcsRate" render={({ field }) => (<FormItem><FormLabel>TCS Rate %</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -225,11 +226,11 @@ function GstrRegisterForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>GSTR1 & GSTR2 Register</CardTitle><CardDescription>View a detailed tax ledger.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                  <FormField
                     control={form.control} name="dateRange"
                     render={({ field }) => (
-                    <FormItem className="flex flex-col"><FormLabel>Date range</FormLabel><Popover><PopoverTrigger asChild><Button id="date" variant={"outline"} className={cn("justify-start text-left font-normal w-full", !field.value?.from && "text-muted-foreground")}>
+                    <FormItem className="flex flex-col"><FormLabel>Date range</FormLabel><Popover><PopoverTrigger asChild><Button id="date" variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value?.from && "text-muted-foreground")}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {field.value?.from ? ( field.value.to ? (<>{format(field.value.from, "LLL dd, y")} - {format(field.value.to, "LLL dd, y")}</>) : (format(field.value.from, "LLL dd, y"))) : (<span>Pick a date</span>)}
                     </Button></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar initialFocus mode="range" defaultMonth={field.value?.from} selected={field.value} onSelect={field.onChange} numberOfMonths={2}/></PopoverContent></Popover><FormMessage /></FormItem>
@@ -296,8 +297,8 @@ function BalanceSheetForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Balance Sheet</CardTitle><CardDescription>Generate a financial statement.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <FormField control={form.control} name="asOnDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>As On Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full md:w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
-                <div className="grid md:grid-cols-4 gap-4">
+                <FormField control={form.control} name="asOnDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>As On Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full md:w-[240px] justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="grid gap-2"><Label>Assets Total</Label><Input disabled value="5,000,000.00" /></div>
                     <div className="grid gap-2"><Label>Liabilities Total</Label><Input disabled value="2,500,000.00" /></div>
                     <div className="grid gap-2"><Label>Capital Account</Label><Input disabled value="2,000,000.00" /></div>
@@ -315,17 +316,20 @@ export default function StatutoryPage() {
       <DashboardHeader title="Statutory Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="gst-taxation">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9">
-            <TabsTrigger value="gst-taxation">GST Master</TabsTrigger>
-            <TabsTrigger value="gstr1-upload">GSTR-1</TabsTrigger>
-            <TabsTrigger value="gst2a-recon">GST2A Recon</TabsTrigger>
-            <TabsTrigger value="gst-challan">GST Challan</TabsTrigger>
-            <TabsTrigger value="tds-trace">TDS</TabsTrigger>
-            <TabsTrigger value="tcs-details">TCS</TabsTrigger>
-            <TabsTrigger value="gstr-register">GSTR Register</TabsTrigger>
-            <TabsTrigger value="cheque-book">Cheque Book</TabsTrigger>
-            <TabsTrigger value="balance-sheet">Balance Sheet</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="gst-taxation">GST Master</TabsTrigger>
+              <TabsTrigger value="gstr1-upload">GSTR-1</TabsTrigger>
+              <TabsTrigger value="gst2a-recon">GST2A Recon</TabsTrigger>
+              <TabsTrigger value="gst-challan">GST Challan</TabsTrigger>
+              <TabsTrigger value="tds-trace">TDS</TabsTrigger>
+              <TabsTrigger value="tcs-details">TCS</TabsTrigger>
+              <TabsTrigger value="gstr-register">GSTR Register</TabsTrigger>
+              <TabsTrigger value="cheque-book">Cheque Book</TabsTrigger>
+              <TabsTrigger value="balance-sheet">Balance Sheet</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="gst-taxation" className="mt-4"><GstTaxationMasterForm /></TabsContent>
           <TabsContent value="gstr1-upload" className="mt-4"><Gstr1UploadForm /></TabsContent>
           <TabsContent value="gst2a-recon" className="mt-4"><Gst2aReconciliationForm /></TabsContent>

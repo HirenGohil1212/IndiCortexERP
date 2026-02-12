@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 10.1 Warehouse Master
 const warehouseMasterSchema = z.object({
@@ -43,7 +44,7 @@ function WarehouseMasterForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Warehouse</CardTitle><CardDescription>Add a new warehouse to the master list.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>Warehouse ID</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="name" render={({ field }) => (<FormItem><FormLabel>Name</FormLabel><FormControl><Input placeholder="e.g. Main Warehouse" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="managerName" render={({ field }) => (<FormItem><FormLabel>Manager Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -74,13 +75,13 @@ function WarehouseOpeningForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Warehouse Opening Stock</CardTitle><CardDescription>Set up the initial stock for an item.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <FormField control={form.control} name="itemName" render={({ field }) => (<FormItem><FormLabel>Item Name</FormLabel><FormControl><Input placeholder="Select Item" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="openingQty" render={({ field }) => (<FormItem><FormLabel>Opening Quantity</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="value" render={({ field }) => (<FormItem><FormLabel>Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="date" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
             </CardContent>
@@ -110,16 +111,16 @@ function DispatchSrvForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Dispatch SRV (Service Voucher)</CardTitle><CardDescription>Create a non-sales dispatch, like a returnable gate pass.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="grid gap-2"><Label>SRV No</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="date" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="partyName" render={({ field }) => (<FormItem><FormLabel>Party Name</FormLabel><FormControl><Input placeholder="Recipient's Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item being dispatched" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="qty" render={({ field }) => (<FormItem><FormLabel>Quantity</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="returnExpected" render={({ field }) => (
@@ -153,7 +154,7 @@ function StockTransferForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Warehouse Stock Transfer</CardTitle><CardDescription>Move stock between two warehouses.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2"><Label>Transfer ID</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="fromWarehouse" render={({ field }) => (<FormItem><FormLabel>From Warehouse</FormLabel><FormControl><Input placeholder="Select Source" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="toWarehouse" render={({ field }) => (<FormItem><FormLabel>To Warehouse</FormLabel><FormControl><Input placeholder="Select Destination" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -180,7 +181,7 @@ function WarehouseMaterialReceiptForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Warehouse Material Receipt</CardTitle><CardDescription>Receive transferred or returned material.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2"><Label>Receipt ID</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="sourceDocRef" render={({ field }) => (<FormItem><FormLabel>Source Doc Ref</FormLabel><FormControl><Input placeholder="e.g. Transfer ID, SRV No" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -198,13 +199,16 @@ export default function InventoryPage() {
       <DashboardHeader title="Warehouse Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="warehouse-master">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-            <TabsTrigger value="warehouse-master">Warehouse Master</TabsTrigger>
-            <TabsTrigger value="opening-stock">Opening Stock</TabsTrigger>
-            <TabsTrigger value="dispatch-srv">Dispatch SRV</TabsTrigger>
-            <TabsTrigger value="stock-transfer">Stock Transfer</TabsTrigger>
-            <TabsTrigger value="material-receipt">Material Receipt</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="warehouse-master">Warehouse Master</TabsTrigger>
+              <TabsTrigger value="opening-stock">Opening Stock</TabsTrigger>
+              <TabsTrigger value="dispatch-srv">Dispatch SRV</TabsTrigger>
+              <TabsTrigger value="stock-transfer">Stock Transfer</TabsTrigger>
+              <TabsTrigger value="material-receipt">Material Receipt</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="warehouse-master" className="mt-4">
             <WarehouseMasterForm />
           </TabsContent>

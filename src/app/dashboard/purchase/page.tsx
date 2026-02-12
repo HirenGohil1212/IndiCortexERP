@@ -21,6 +21,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 2.1 Material Indent
 const indentItemSchema = z.object({
@@ -74,7 +75,7 @@ function IndentForm() {
             <CardDescription>Create an internal request for materials.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <div className="grid md:grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="grid gap-2">
                 <Label>Indent No</Label>
                 <Input disabled placeholder="Auto-generated" />
@@ -83,7 +84,7 @@ function IndentForm() {
                 control={form.control}
                 name="requestDate"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col pt-2">
+                  <FormItem className="flex flex-col">
                     <FormLabel>Request Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -91,7 +92,7 @@ function IndentForm() {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
+                              "w-full justify-start text-left font-normal",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -280,11 +281,11 @@ function PurchaseOrderForm() {
     <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
       <CardHeader><CardTitle>New Purchase Order</CardTitle><CardDescription>Create an order to send to a vendor.</CardDescription></CardHeader>
       <CardContent className="grid gap-6">
-        <div className="grid md:grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="grid gap-2"><Label>PO No</Label><Input disabled placeholder="Auto-generated" /></div>
           <FormField control={form.control} name="vendorName" render={({ field }) => (<FormItem><FormLabel>Vendor Name</FormLabel><FormControl><Input placeholder="Vendor Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
-          <FormField control={form.control} name="poDate" render={({ field }) => (<FormItem className="flex flex-col pt-2"><FormLabel>PO Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
-          <FormField control={form.control} name="validUntil" render={({ field }) => (<FormItem className="flex flex-col pt-2"><FormLabel>Valid Until</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="poDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>PO Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="validUntil" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Valid Until</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
         </div>
         <div>
           <h3 className="text-lg font-medium mb-2">Items</h3>
@@ -296,7 +297,7 @@ function PurchaseOrderForm() {
                   <TableCell><FormField control={form.control} name={`items.${index}.itemName`} render={({ field }) => (<FormItem><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
                   <TableCell><FormField control={form.control} name={`items.${index}.quantity`} render={({ field }) => (<FormItem><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
                   <TableCell><FormField control={form.control} name={`items.${index}.rate`} render={({ field }) => (<FormItem><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} /></TableCell>
-                  <TableCell><FormField control={form.control} name={`items.${index}.expectedDeliveryDate`} render={({ field }) => (<FormItem><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} size="sm" className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} /></TableCell>
+                  <TableCell><FormField control={form.control} name={`items.${index}.expectedDeliveryDate`} render={({ field }) => (<FormItem><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} size="sm" className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} /></TableCell>
                   <TableCell>{fields.length > 1 && (<Button variant="ghost" size="icon" onClick={() => remove(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>)}</TableCell>
                 </TableRow>
               ))}</TableBody>
@@ -333,9 +334,9 @@ function PurchaseScheduleForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Purchase Schedule</CardTitle><CardDescription>Track expected deliveries from vendors.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4 items-end">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <FormField control={form.control} name="poRef" render={({ field }) => (<FormItem><FormLabel>PO Reference</FormLabel><FormControl><Input placeholder="PO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="expectedDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Expected Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="expectedDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Expected Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="followUpStatus" render={({ field }) => (<FormItem><FormLabel>Status</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent><SelectItem value="On-Time">On-Time</SelectItem><SelectItem value="Delayed">Delayed</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                 </div>
                 <FormField control={form.control} name="remarks" render={({ field }) => (<FormItem><FormLabel>Remarks</FormLabel><FormControl><Textarea placeholder="Add any follow-up notes..." {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -362,11 +363,11 @@ function GoodsReceiptNoteForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Goods Receipt Note (GRN)</CardTitle><CardDescription>Record materials received at the gate.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4 items-end">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                 <div className="grid gap-2"><Label>GRN No</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="poRef" render={({ field }) => (<FormItem><FormLabel>PO Reference</FormLabel><FormControl><Input placeholder="PO-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="vendorChallanNo" render={({ field }) => (<FormItem><FormLabel>Vendor Challan No</FormLabel><FormControl><Input placeholder="Vendor's Challan Number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                <FormField control={form.control} name="gateEntryDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Gate Entry Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="gateEntryDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Gate Entry Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="vehicleNo" render={({ field }) => (<FormItem><FormLabel>Vehicle No</FormLabel><FormControl><Input placeholder="Vehicle Number" {...field} /></FormControl><FormMessage /></FormItem>)} />
             </CardContent>
             <CardFooter className="border-t px-6 py-4"><Button type="submit">Create GRN</Button></CardFooter>
@@ -407,11 +408,11 @@ function IQCForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Incoming Quality Control (IQC)</CardTitle><CardDescription>Perform quality check on received goods.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                      <FormField control={form.control} name="grnRef" render={({ field }) => (<FormItem><FormLabel>GRN Reference</FormLabel><FormControl><Input placeholder="GRN-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                      <FormField control={form.control} name="item" render={({ field }) => (<FormItem><FormLabel>Item</FormLabel><FormControl><Input placeholder="Item Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <FormField control={form.control} name="totalQty" render={({ field }) => (<FormItem><FormLabel>Total Quantity</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="sampleSize" render={({ field }) => (<FormItem><FormLabel>Sample Size</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="acceptedQty" render={({ field }) => (<FormItem><FormLabel>Accepted Qty</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -438,7 +439,7 @@ function MaterialReceiptForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Material Receipt</CardTitle><CardDescription>Add accepted goods into inventory stock.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="grid gap-2"><Label>Receipt ID</Label><Input disabled placeholder="Auto-generated" /></div>
                 <FormField control={form.control} name="grnRef" render={({ field }) => (<FormItem><FormLabel>GRN Reference</FormLabel><FormControl><Input placeholder="GRN-001" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="storageLocation" render={({ field }) => (<FormItem><FormLabel>Storage Location</FormLabel><FormControl><Input placeholder="Rack A, Bin 1" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -469,10 +470,10 @@ function PurchaseBillbookForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Purchase Billbook</CardTitle><CardDescription>Log a new invoice received from a vendor.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                 <div className="grid md:grid-cols-3 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="grid gap-2"><Label>Bill ID</Label><Input disabled placeholder="Auto-generated" /></div>
                     <FormField control={form.control} name="vendorInvoiceNo" render={({ field }) => (<FormItem><FormLabel>Vendor Invoice No.</FormLabel><FormControl><Input placeholder="Invoice Number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                    <FormField control={form.control} name="invoiceDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Invoice Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="invoiceDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Invoice Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                     <FormField control={form.control} name="taxableValue" render={({ field }) => (<FormItem><FormLabel>Taxable Value</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -501,9 +502,9 @@ function VoucherPaymentForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Voucher Payment</CardTitle><CardDescription>Record a payment made to a vendor.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-4 gap-4 items-end">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                 <div className="grid gap-2"><Label>Voucher No</Label><Input disabled placeholder="Auto-generated" /></div>
-                <FormField control={form.control} name="paymentDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Payment Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="paymentDate" render={({ field }) => (<FormItem className="flex flex-col"><FormLabel>Payment Date</FormLabel><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="vendor" render={({ field }) => (<FormItem><FormLabel>Vendor</FormLabel><FormControl><Input placeholder="Vendor Name" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="amount" render={({ field }) => (<FormItem><FormLabel>Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="bankAccount" render={({ field }) => (<FormItem><FormLabel>Bank Account</FormLabel><FormControl><Input placeholder="Bank Name / Account" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -519,16 +520,19 @@ export default function PurchasePage() {
       <DashboardHeader title="Purchase Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="material-indent">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8">
-            <TabsTrigger value="material-indent">Material Indent</TabsTrigger>
-            <TabsTrigger value="purchase-order">Purchase Order</TabsTrigger>
-            <TabsTrigger value="purchase-schedule">Purchase Schedule</TabsTrigger>
-            <TabsTrigger value="grn">GRN</TabsTrigger>
-            <TabsTrigger value="iqc">IQC</TabsTrigger>
-            <TabsTrigger value="material-receipt">Material Receipt</TabsTrigger>
-            <TabsTrigger value="billbook">Purchase Billbook</TabsTrigger>
-            <TabsTrigger value="voucher-payment">Voucher Payment</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="material-indent">Material Indent</TabsTrigger>
+              <TabsTrigger value="purchase-order">Purchase Order</TabsTrigger>
+              <TabsTrigger value="purchase-schedule">Purchase Schedule</TabsTrigger>
+              <TabsTrigger value="grn">GRN</TabsTrigger>
+              <TabsTrigger value="iqc">IQC</TabsTrigger>
+              <TabsTrigger value="material-receipt">Material Receipt</TabsTrigger>
+              <TabsTrigger value="billbook">Purchase Billbook</TabsTrigger>
+              <TabsTrigger value="voucher-payment">Voucher Payment</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="material-indent" className="mt-4"><IndentForm /></TabsContent>
           <TabsContent value="purchase-order" className="mt-4"><PurchaseOrderForm /></TabsContent>
           <TabsContent value="purchase-schedule" className="mt-4"><PurchaseScheduleForm /></TabsContent>

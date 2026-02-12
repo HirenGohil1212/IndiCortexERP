@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // 5.1 Employee Master
 const employeeMasterSchema = z.object({
@@ -46,20 +47,20 @@ function EmployeeMasterForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>New Employee</CardTitle><CardDescription>Add a new staff member to the system.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <FormField control={form.control} name="empCode" render={({ field }) => (<FormItem><FormLabel>Emp Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="name" render={({ field }) => (<FormItem><FormLabel>Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="designation" render={({ field }) => (<FormItem><FormLabel>Designation</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="mobile" render={({ field }) => (<FormItem><FormLabel>Mobile</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
-                 <div className="grid md:grid-cols-4 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <FormField control={form.control} name="joiningDate" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Joining Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                      <FormField control={form.control} name="basicSalary" render={({ field }) => (<FormItem><FormLabel>Basic Salary</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                     <FormField control={form.control} name="bankDetails" render={({ field }) => (<FormItem className="col-span-2"><FormLabel>Bank Details</FormLabel><FormControl><Input placeholder="Bank Name, Account No, IFSC" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                     <FormField control={form.control} name="bankDetails" render={({ field }) => (<FormItem className="col-span-1 lg:col-span-2"><FormLabel>Bank Details</FormLabel><FormControl><Input placeholder="Bank Name, Account No, IFSC" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </div>
             </CardContent>
             <CardFooter className="border-t px-6 py-4"><Button type="submit">Save Employee</Button></CardFooter>
@@ -110,15 +111,15 @@ function EmployeeSalaryStructureForm() {
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Employee Salary Structure</CardTitle><CardDescription>Assign pay structure to an employee.</CardDescription></CardHeader>
             <CardContent className="grid gap-6">
-                 <div className="grid md:grid-cols-3 gap-4">
+                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <FormField control={form.control} name="empName" render={({ field }) => (<FormItem><FormLabel>Employee Name</FormLabel><FormControl><Input placeholder="Select Employee" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="effectiveDate" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Effective Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                 </div>
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <FormField control={form.control} name="basic" render={({ field }) => (<FormItem><FormLabel>Basic</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="hra" render={({ field }) => (<FormItem><FormLabel>HRA</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                     <FormField control={form.control} name="da" render={({ field }) => (<FormItem><FormLabel>DA</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -164,7 +165,7 @@ function EmployeeSalarySheetForm() {
                 <div className="grid md:grid-cols-3 gap-4">
                      <FormField control={form.control} name="month" render={({ field }) => (
                         <FormItem className="flex flex-col"><FormLabel>Month</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                            <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                            <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                         </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="totalDays" render={({ field }) => (<FormItem><FormLabel>Total Days</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -205,18 +206,18 @@ function EmployeeAdvanceMemoForm() {
     return (
         <Card><Form {...form}><form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader><CardTitle>Employee Advance Memo</CardTitle><CardDescription>Record a loan or advance given to an employee.</CardDescription></CardHeader>
-            <CardContent className="grid md:grid-cols-3 gap-4">
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <FormField control={form.control} name="empName" render={({ field }) => (<FormItem><FormLabel>Employee Name</FormLabel><FormControl><Input placeholder="Select Employee" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="date" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Date</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="amount" render={({ field }) => (<FormItem><FormLabel>Amount</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="purpose" render={({ field }) => (<FormItem><FormLabel>Purpose</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                  <FormField control={form.control} name="recoveryMonth" render={({ field }) => (
                     <FormItem className="flex flex-col"><FormLabel>Recovery Start Month</FormLabel><Popover><PopoverTrigger asChild><FormControl>
-                        <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !field.value && "text-muted-foreground")}>{field.value ? format(field.value, "MMM yyyy") : <span>Pick a month</span>}<CalendarIcon className="ml-auto h-4 w-4 opacity-50" /></Button>
                     </FormControl></PopoverTrigger><PopoverContent className="w-auto p-0"><Calendar mode="single" selected={field.value} onSelect={field.onChange} /></PopoverContent></Popover><FormMessage /></FormItem>
                 )} />
             </CardContent>
@@ -231,13 +232,16 @@ export default function HRPage() {
       <DashboardHeader title="HR Management" />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Tabs defaultValue="employee-master">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-            <TabsTrigger value="employee-master">Employee Master</TabsTrigger>
-            <TabsTrigger value="salary-head">Salary Head</TabsTrigger>
-            <TabsTrigger value="salary-structure">Salary Structure</TabsTrigger>
-            <TabsTrigger value="salary-sheet">Salary Sheet</TabsTrigger>
-            <TabsTrigger value="advance-memo">Advance Memo</TabsTrigger>
-          </TabsList>
+          <ScrollArea>
+            <TabsList>
+              <TabsTrigger value="employee-master">Employee Master</TabsTrigger>
+              <TabsTrigger value="salary-head">Salary Head</TabsTrigger>
+              <TabsTrigger value="salary-structure">Salary Structure</TabsTrigger>
+              <TabsTrigger value="salary-sheet">Salary Sheet</TabsTrigger>
+              <TabsTrigger value="advance-memo">Advance Memo</TabsTrigger>
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
           <TabsContent value="employee-master" className="mt-4">
             <EmployeeMasterForm />
           </TabsContent>
