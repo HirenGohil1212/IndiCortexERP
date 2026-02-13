@@ -47,6 +47,13 @@ type InquiryFormValues = z.infer<typeof inquirySchema>;
 
 function InquiryForm() {
   const { toast } = useToast();
+  const [stockCheck, setStockCheck] = React.useState<{
+    currentStock: number;
+    blockedStock: number;
+    netAvailable: number;
+    deliveryDate: Date;
+  } | null>(null);
+
   const form = useForm<InquiryFormValues>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
@@ -63,6 +70,35 @@ function InquiryForm() {
     name: "items",
   });
 
+  function handleVerifyStock() {
+    // Dummy data and logic for demonstration
+    const currentStock = 100;
+    const blockedStock = 20;
+    const productionTimeDays = 7;
+    const netAvailable = currentStock - blockedStock;
+    
+    const totalInquiryQty = form.getValues('items').reduce((acc, item) => acc + item.quantity, 0);
+
+    const newDeliveryDate = new Date();
+    if (netAvailable > totalInquiryQty) {
+      newDeliveryDate.setDate(newDeliveryDate.getDate() + 2);
+    } else {
+      newDeliveryDate.setDate(newDeliveryDate.getDate() + productionTimeDays);
+    }
+
+    setStockCheck({
+      currentStock,
+      blockedStock,
+      netAvailable,
+      deliveryDate: newDeliveryDate,
+    });
+
+    toast({
+      title: "Stock Verified",
+      description: `Estimated delivery date: ${format(newDeliveryDate, "PPP")}`,
+    });
+  }
+
   function onSubmit(data: InquiryFormValues) {
     console.log(data);
     toast({
@@ -70,6 +106,7 @@ function InquiryForm() {
       description: "The new inquiry has been successfully saved.",
     });
     form.reset();
+    setStockCheck(null);
   }
 
   return (
@@ -228,6 +265,36 @@ function InquiryForm() {
                <FormMessage className="mt-2">{form.formState.errors.items?.message}</FormMessage>
             </div>
             
+            <Separator className="my-4" />
+
+            <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                    <Button type="button" onClick={handleVerifyStock}>Verify Stock</Button>
+                    <p className="text-sm text-muted-foreground">Check availability to estimate a delivery date.</p>
+                </div>
+
+                {stockCheck && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 rounded-md border p-4">
+                        <div className="grid gap-2">
+                            <Label>Current Stock</Label>
+                            <Input disabled value={stockCheck.currentStock} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label>Blocked Stock</Label>
+                            <Input disabled value={stockCheck.blockedStock} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label>Net Available</Label>
+                            <Input disabled value={stockCheck.netAvailable} />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label>Est. Delivery Date</Label>
+                            <Input disabled value={format(stockCheck.deliveryDate, "PPP")} />
+                        </div>
+                    </div>
+                )}
+            </div>
+
              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                  <FormField
                     control={form.control}
