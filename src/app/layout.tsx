@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import 'react-day-picker/dist/style.css';
 
 const roboto = Roboto({
   subsets: ['latin'],
